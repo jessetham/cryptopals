@@ -1,47 +1,49 @@
 import collections
+from string import ascii_letters, whitespace, punctuation
 
 letterFrequenciesLowercase = {
-    "e": 12.02,
-    "t": 9.10,
-    "a": 8.12,
-    "o": 7.68,
-    "i": 7.31,
-    "n": 6.95,
-    "s": 6.28,
-    "r": 6.02,
-    "h": 5.92,
-    "d": 4.32,
-    "l": 3.98,
-    "u": 2.88,
-    "c": 2.71,
-    "m": 2.61,
-    "f": 2.30,
-    "y": 2.11,
-    "w": 2.09,
-    "g": 2.03,
-    "p": 1.82,
-    "b": 1.49,
-    "v": 1.11,
-    "k": 0.69,
-    "x": 0.17,
-    "q": 0.11,
-    "j": 0.10,
-    "z": 0.07,
+    "a": 0.08167,
+    "b": 0.01492,
+    "c": 0.02782,
+    "d": 0.04253,
+    "e": 0.12702,
+    "f": 0.02228,
+    "g": 0.02015,
+    "h": 0.06094,
+    "i": 0.06094,
+    "j": 0.00153,
+    "k": 0.00772,
+    "l": 0.04025,
+    "m": 0.02406,
+    "n": 0.06749,
+    "o": 0.07507,
+    "p": 0.01929,
+    "q": 0.00095,
+    "r": 0.05987,
+    "s": 0.06327,
+    "t": 0.09056,
+    "u": 0.02758,
+    "v": 0.00978,
+    "w": 0.02360,
+    "x": 0.00150,
+    "y": 0.01974,
+    "z": 0.00074,
+    " ": 0.13000,
 }
 
 
-def mse(observed, predicted):
-    return sum(map(lambda o, p: (o - p) ** 2, observed, predicted)) / len(observed)
+def mse(observed, expected):
+    return sum(map(lambda o, e: ((o - e) ** 2) / e, observed, expected))
 
 
 def scoreText(bs):
-    # We only take into account English letters, but adding spaces and/or punctuation would probably help as well
-    letters = filter(lambda b: 65 <= b <= 90 or 97 <= b <= 122, bs)
-    letters = map(lambda b: chr(b).lower(), letters)
+    if not bs or any(
+        [chr(b) not in ascii_letters + whitespace + punctuation for b in bs]
+    ):
+        return float("inf")
+    letters = map(lambda b: chr(b).lower(), bs)
     count = collections.Counter(letters)
-    # The idea behind dividing by the length of the input is that it will penalize counts that have
-    # a small amount of ASCII letters compared to the input
-    for c in count.keys():
-        count[c] /= len(bs)
+    countSize = len(count.values())
     observed = [count[c] for c in letterFrequenciesLowercase.keys()]
-    return mse(observed, letterFrequenciesLowercase.values())
+    expected = [f * countSize for f in letterFrequenciesLowercase.values()]
+    return mse(observed, expected)

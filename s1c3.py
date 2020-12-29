@@ -9,5 +9,4 @@ if __name__ == "__main__":
     possibles = [
         bytes(map(lambda b: b ^ possibleKey, ciphertext)) for possibleKey in range(256)
     ]
-    # Cooking MC's like a pound of bacon
-    pprint(sorted(possibles, key=english.scoreText)[:5])
+    print(min(possibles, key=english.scoreText))
