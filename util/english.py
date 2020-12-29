@@ -1,5 +1,5 @@
 import collections
-from string import ascii_letters, whitespace, punctuation
+from string import ascii_letters, whitespace, punctuation, printable
 
 letterFrequenciesLowercase = {
     "a": 0.08167,
@@ -36,10 +36,9 @@ def mse(observed, expected):
     return sum(map(lambda o, e: ((o - e) ** 2) / e, observed, expected))
 
 
+# Pretty finicky, I usually have to change the disqualification criteria for different problems
 def scoreText(bs):
-    if not bs or any(
-        [chr(b) not in ascii_letters + whitespace + punctuation for b in bs]
-    ):
+    if not bs or any([chr(b) not in printable for b in bs]):
         return float("inf")
     letters = map(lambda b: chr(b).lower(), bs)
     count = collections.Counter(letters)
