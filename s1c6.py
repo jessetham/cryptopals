@@ -1,10 +1,9 @@
-from util import bits, english
 import base64
 import statistics
 from pprint import pprint
-import operator
-import itertools
 from string import ascii_letters, punctuation, whitespace
+
+from util import bits, english
 
 
 def calculateNormalizedDistance(bs, keysize):
