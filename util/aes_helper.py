@@ -34,6 +34,6 @@ def oracle(bb):
     return "ECB" if max(counter.values()) > 1 else "CBC"
 
 
-def getRandomCBCCipher(key=randbytes(16), iv=randbytes(16)):
+def getCBCCipher(key=randbytes(16), iv=randbytes(16)):
     assert len(key) == len(iv)
     return Cipher(algorithms.AES(key), modes.CBC(iv))

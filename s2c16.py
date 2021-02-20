@@ -30,7 +30,7 @@ def editCiphertext(userdata, ciphertext):
 # Garbled block doesn't parse nicely into ascii.
 # I am able to inject the target into the plaintext by manipulating the ciphertext though.
 if __name__ == "__main__":
-    cipher = aes_helper.getRandomCBCCipher()
+    cipher = aes_helper.getCBCCipher()
     userdata = b"1" * 11
     ct = getCiphertext(userdata, cipher.encryptor())
     print(isAdmin(ct, cipher.decryptor()))
