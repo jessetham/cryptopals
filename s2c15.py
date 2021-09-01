@@ -1,6 +1,7 @@
 import unittest
 from util import padding
 
+
 class TestCase(unittest.TestCase):
     def test_pkcs7Validation(self):
         b1 = b"ICE ICE BABY"
@@ -11,6 +12,7 @@ class TestCase(unittest.TestCase):
         p2 = b"ICE ICE BABY\x01\x02\x03\x04"
         with self.assertRaises(padding.BadPaddingException):
             padding.pkcs7Strip(p2)
+
 
 if __name__ == "__main__":
     unittest.main()
