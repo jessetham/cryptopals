@@ -60,7 +60,7 @@ class MT:
 
 
 class MT19937(MT):
-    def __init__(self, seed: int):
+    def __init__(self, seed: int = 5489):
         super().__init__(
             MTParams(
                 *(32, 624, 397, 31),
@@ -76,7 +76,7 @@ class MT19937(MT):
 
 
 class MT19937_64(MT):
-    def __init__(self, seed: int):
+    def __init__(self, seed: int = 5489):
         super().__init__(
             MTParams(
                 *(64, 312, 156, 31),
